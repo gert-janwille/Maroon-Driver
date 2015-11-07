@@ -1,5 +1,6 @@
 import Ground from '../objects/Ground';
 import Car from '../objects/Car';
+import LampGroup from '../objects/LampGroup';
 
 export default class Play extends Phaser.State{
 	create(){
@@ -15,8 +16,10 @@ export default class Play extends Phaser.State{
 		this.ground = new Ground(this.game,0,495,600,110);
 		this.game.add.existing(this.ground);
 
-		this.LampGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateLamp, this);
+		this.LampGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.generateLamp, this);
 		this.LampGenerator.timer.start();
+
+		this.lamps = this.game.add.group();
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
@@ -30,9 +33,21 @@ export default class Play extends Phaser.State{
 			this.car.jump();
 		}
 		this.car.body.velocity.x *=0.9;
+
+		this.lamps.forEach(lampGroup => { 
+			this.game.physics.arcade.collide(this.car, lampGroup, this.deathHandler, null, this); 
+		});
 	}
 
 	generateLamp(){
-		console.log('hello Lamp');
+		let lampGroup = this.lamps.getFirstExists(false); 
+		if(!lampGroup) {
+			lampGroup = new LampGroup(this.game, this.lamps); 
+		}
+		lampGroup.reset(this.game.width + lampGroup.width/2, 0);
+		console.log(lampGroup);
+	}
+	deathHandler(){
+		//console.log('dead');
 	}
 }

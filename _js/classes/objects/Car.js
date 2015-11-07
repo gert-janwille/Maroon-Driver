@@ -4,10 +4,10 @@ export default class Car extends Phaser.TileSprite {
 		this.anchor.setTo(0.5, 0.5); 
 		this.game.physics.arcade.enableBody(this);
 		this.body.collideWorldBounds = true;
-		this.body.bounce.y = 0.35;
+		//this.body.bounce.y = 0.1;
 	}
 	jump(){
-		this.body.velocity.y += -150;
+		this.body.velocity.y += -210;
 	}
 	slow(){
 		this.body.velocity.x += -50;
