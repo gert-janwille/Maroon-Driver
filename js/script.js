@@ -48,19 +48,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _classesStatesBoot = __webpack_require__(2);
+	var _classesStatesBoot = __webpack_require__(1);
 
 	var _classesStatesBoot2 = _interopRequireDefault(_classesStatesBoot);
 
-	var _classesStatesPreload = __webpack_require__(3);
+	var _classesStatesPreload = __webpack_require__(2);
 
 	var _classesStatesPreload2 = _interopRequireDefault(_classesStatesPreload);
 
-	var _classesStatesMenu = __webpack_require__(4);
+	var _classesStatesMenu = __webpack_require__(3);
 
 	var _classesStatesMenu2 = _interopRequireDefault(_classesStatesMenu);
 
-	var _classesStatesPlay = __webpack_require__(5);
+	var _classesStatesPlay = __webpack_require__(4);
 
 	var _classesStatesPlay2 = _interopRequireDefault(_classesStatesPlay);
 
@@ -71,11 +71,10 @@
 	game.state.add('Menu', _classesStatesMenu2['default'], false);
 	game.state.add('Play', _classesStatesPlay2['default'], false);
 
-	game.state.start('Preload');
+	game.state.start('Boot');
 
 /***/ },
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -120,7 +119,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -176,7 +175,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -244,7 +243,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -263,11 +262,11 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _objectsGround = __webpack_require__(6);
+	var _objectsGround = __webpack_require__(5);
 
 	var _objectsGround2 = _interopRequireDefault(_objectsGround);
 
-	var _objectsCar = __webpack_require__(7);
+	var _objectsCar = __webpack_require__(6);
 
 	var _objectsCar2 = _interopRequireDefault(_objectsCar);
 
@@ -319,7 +318,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -354,7 +353,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
