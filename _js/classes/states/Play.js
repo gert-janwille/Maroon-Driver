@@ -21,6 +21,9 @@ export default class Play extends Phaser.State{
 
 		this.lamps = this.game.add.group();
 		this.score = 0;
+
+		this.scoreSound = this.game.add.audio('score');
+		this.hitSound = this.game.add.audio('hit');
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
@@ -51,12 +54,18 @@ export default class Play extends Phaser.State{
 	}
 	deathHandler(){
 		console.log('dead');
+		this.hitSound.play();
+		this.car.kill(); 
+		this.lamps.callAll('stop'); 
+		this.LampGenerator.timer.stop(); 
+		this.ground.stopScroll();
 	}
 
 	checkScore(lampGroup) {
 		if(lampGroup.exists && !lampGroup.hasScored && lampGroup.lamp.world.x <= this.car.world.x) { 
 			lampGroup.hasScored = true;
 			this.score++;
+			this.scoreSound.play();
 		} 
 	}
 }

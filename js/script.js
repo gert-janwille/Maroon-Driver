@@ -309,6 +309,9 @@
 
 				this.lamps = this.game.add.group();
 				this.score = 0;
+
+				this.scoreSound = this.game.add.audio('score');
+				this.hitSound = this.game.add.audio('hit');
 			}
 		}, {
 			key: 'update',
@@ -346,6 +349,11 @@
 			key: 'deathHandler',
 			value: function deathHandler() {
 				console.log('dead');
+				this.hitSound.play();
+				this.car.kill();
+				this.lamps.callAll('stop');
+				this.LampGenerator.timer.stop();
+				this.ground.stopScroll();
 			}
 		}, {
 			key: 'checkScore',
@@ -353,6 +361,7 @@
 				if (lampGroup.exists && !lampGroup.hasScored && lampGroup.lamp.world.x <= this.car.world.x) {
 					lampGroup.hasScored = true;
 					this.score++;
+					this.scoreSound.play();
 				}
 			}
 		}]);
