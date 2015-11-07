@@ -11,14 +11,10 @@ export default class Car extends Phaser.TileSprite {
 	}
 	slow(){
 		this.body.velocity.x += -50;
-		if (!this.body.wasTouching.down) {
-			this.body.velocity.x *= 0.8;
-		};
+		if (!this.body.wasTouching.down) this.body.velocity.x *= 0.8;
 	}
 	fast(){
 		this.body.velocity.x += 50;
-		if (!this.body.wasTouching.down) {
-			this.body.velocity.x *= 0.8;
-		};
+		if (!this.body.wasTouching.down) this.body.velocity.x *= 0.8;
 	}
 }

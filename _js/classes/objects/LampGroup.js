@@ -16,8 +16,6 @@ export default class LampGroup extends Phaser.Group {
 		this.exists = true;
 	}
 	update(){
-		if(!this.lamp.inWorld) { 
-			this.exists = false;
-		}
+		if(!this.lamp.inWorld) this.exists = false;
 	}
 }

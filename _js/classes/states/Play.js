@@ -27,38 +27,30 @@ export default class Play extends Phaser.State{
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
-		if(this.cursors.left.isDown){
-			this.car.slow();
-		}
-		if(this.cursors.right.isDown){
-			this.car.fast();
-		}
-		if(this.car.body.wasTouching.down && this.cursors.up.isDown){
-			this.car.jump();
-		}
+
+		if(this.cursors.left.isDown) this.car.slow();
+		if(this.cursors.right.isDown) this.car.fast();
+		if(this.car.body.wasTouching.down && this.cursors.up.isDown) this.car.jump();
 		this.car.body.velocity.x *=0.9;
 
 		this.lamps.forEach(lampGroup => { 
 			this.game.physics.arcade.collide(this.car, lampGroup, this.deathHandler, this.checkScore(lampGroup), this);
 		});
-
 		this.scoreText = this.game.add.bitmapText(this.game.width/2, 10, 'flappyfont',this.score.toString(), 50);
 	}
 
 	generateLamp(){
 		let lampGroup = this.lamps.getFirstExists(false); 
-		if(!lampGroup) {
-			lampGroup = new LampGroup(this.game, this.lamps); 
-		}
+		if(!lampGroup) lampGroup = new LampGroup(this.game, this.lamps);
 		lampGroup.reset(this.game.width + lampGroup.width/2, 0);
 	}
 	deathHandler(){
-		console.log('dead');
 		this.hitSound.play();
-		this.car.kill(); 
 		this.lamps.callAll('stop'); 
 		this.LampGenerator.timer.stop(); 
 		this.ground.stopScroll();
+		this.car.kill(); 
+		this.game.state.start('Menu');
 	}
 
 	checkScore(lampGroup) {
