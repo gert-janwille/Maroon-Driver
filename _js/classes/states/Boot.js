@@ -1,5 +1,8 @@
 export default class Boot extends Phaser.State {
 	preload(){
-		console.log('hello world');
+		this.load.image('preloader', 'assets/preloader.gif');
+	}
+	create(){
+		this.game.state.start('Preload');
 	}
 }
