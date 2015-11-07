@@ -1,4 +1,4 @@
-#Maroon Driver - ##Creative Programming III
+#Maroon Driver
 
 ## Game
 try to jump over the obstacles with the car.
