@@ -3,9 +3,9 @@ import Car from '../objects/Car';
 
 export default class Play extends Phaser.State{
 	create(){
-		console.log('hello play world');
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = 500;
+		this.cursors = this.game.input.keyboard.createCursorKeys();
 
 		this.background = this.game.add.sprite(0,0,'background');
 
@@ -17,5 +17,14 @@ export default class Play extends Phaser.State{
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
+		if(this.cursors.left.isDown){
+			this.car.slow();
+		}
+		if(this.cursors.right.isDown){
+			this.car.fast();
+		}
+		if(this.cursors.left.isDown){
+			this.car.slow();
+		}
 	}
 }
