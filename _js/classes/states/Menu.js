@@ -17,6 +17,6 @@ export default class Menu extends Phaser.State{
 		this.startButton.anchor.setTo(0.5,0.5);
 	}
 	startClick(){
-		console.log('hello world');
+		this.game.state.start('Play');
 	}
 }
