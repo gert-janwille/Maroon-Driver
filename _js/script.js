@@ -1,4 +1,4 @@
-//import Boot from './classes/states/Boot';
+import Boot from './classes/states/Boot';
 
 let game = new Phaser.Game(600, 600, Phaser.AUTO);
 game.state.add('Boot', Boot, false);
