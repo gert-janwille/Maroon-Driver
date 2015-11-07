@@ -13,7 +13,8 @@ export default class Preload extends Phaser.State{
 		this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
 	}
 	onLoadComplete(){
-		this.game.state.start('Menu');
+		this.game.state.start('Play');
+		//this.game.state.start('Menu');
 	}
 
 }

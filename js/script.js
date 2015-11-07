@@ -65,10 +65,12 @@
 	var _classesStatesPlay2 = _interopRequireDefault(_classesStatesPlay);
 
 	var game = new Phaser.Game(600, 600, Phaser.AUTO);
+
 	game.state.add('Boot', _classesStatesBoot2['default'], false);
 	game.state.add('Preload', _classesStatesPreload2['default'], false);
 	game.state.add('Menu', _classesStatesMenu2['default'], false);
 	game.state.add('Play', _classesStatesPlay2['default'], false);
+
 	game.state.start('Preload');
 
 /***/ },
@@ -162,7 +164,8 @@
 		}, {
 			key: 'onLoadComplete',
 			value: function onLoadComplete() {
-				this.game.state.start('Menu');
+				this.game.state.start('Play');
+				//this.game.state.start('Menu');
 			}
 		}]);
 
@@ -232,7 +235,7 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -244,9 +247,15 @@
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _objectsGround = __webpack_require__(6);
+
+	var _objectsGround2 = _interopRequireDefault(_objectsGround);
 
 	var Play = (function (_Phaser$State) {
 		_inherits(Play, _Phaser$State);
@@ -260,7 +269,14 @@
 		_createClass(Play, [{
 			key: 'create',
 			value: function create() {
-				console.log('playstate');
+				console.log('hello play world');
+				this.game.physics.startSystem(Phaser.Physics.ARCADE);
+				this.game.physics.arcade.gravity.y = 500;
+
+				this.background = this.game.add.sprite(0, 0, 'background');
+
+				this.ground = new _objectsGround2['default'](this.game, 0, 495, 600, 110);
+				this.game.add.existing(this.ground);
 			}
 		}]);
 
@@ -268,6 +284,41 @@
 	})(Phaser.State);
 
 	exports['default'] = Play;
+	module.exports = exports['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Ground = (function (_Phaser$TileSprite) {
+		_inherits(Ground, _Phaser$TileSprite);
+
+		function Ground(game, x, y, width, height) {
+			_classCallCheck(this, Ground);
+
+			_get(Object.getPrototypeOf(Ground.prototype), 'constructor', this).call(this, game, x, y, width, height, 'tile');
+			this.autoScroll(-200, 0);
+			this.game.physics.arcade.enableBody(this);
+			this.body.allowGravity = false;
+			this.body.immovable = true;
+		}
+
+		return Ground;
+	})(Phaser.TileSprite);
+
+	exports['default'] = Ground;
 	module.exports = exports['default'];
 
 /***/ }
