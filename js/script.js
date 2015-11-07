@@ -157,6 +157,7 @@
 				this.load.image('get-ready', 'assets/get-ready.png');
 				this.load.image('startButton', 'assets/start-button.png');
 				this.load.image('tile', 'assets/tile.png');
+				this.load.image('lamp', 'assets/lamp.png');
 
 				this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
 			}
