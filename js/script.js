@@ -164,8 +164,8 @@
 		}, {
 			key: 'onLoadComplete',
 			value: function onLoadComplete() {
-				this.game.state.start('Play');
-				//this.game.state.start('Menu');
+				//this.game.state.start('Play');
+				this.game.state.start('Menu');
 			}
 		}]);
 
