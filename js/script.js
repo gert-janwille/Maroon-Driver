@@ -294,6 +294,9 @@
 
 				this.ground = new _objectsGround2['default'](this.game, 0, 495, 600, 110);
 				this.game.add.existing(this.ground);
+
+				this.LampGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateLamp, this);
+				this.LampGenerator.timer.start();
 			}
 		}, {
 			key: 'update',
@@ -309,6 +312,11 @@
 					this.car.jump();
 				}
 				this.car.body.velocity.x *= 0.9;
+			}
+		}, {
+			key: 'generateLamp',
+			value: function generateLamp() {
+				console.log('hello Lamp');
 			}
 		}]);
 

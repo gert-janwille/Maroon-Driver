@@ -14,6 +14,9 @@ export default class Play extends Phaser.State{
 
 		this.ground = new Ground(this.game,0,495,600,110);
 		this.game.add.existing(this.ground);
+
+		this.LampGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generateLamp, this);
+		this.LampGenerator.timer.start();
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
@@ -27,5 +30,9 @@ export default class Play extends Phaser.State{
 			this.car.jump();
 		}
 		this.car.body.velocity.x *=0.9;
+	}
+
+	generateLamp(){
+		console.log('hello Lamp');
 	}
 }
