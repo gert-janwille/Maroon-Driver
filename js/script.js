@@ -44,6 +44,8 @@
 /* 0 */
 /***/ function(module, exports) {
 
+	//import Boot from './classes/states/Boot';
+
 	'use strict';
 
 	var game = new Phaser.Game(600, 600, Phaser.AUTO);
