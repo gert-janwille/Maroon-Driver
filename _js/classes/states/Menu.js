@@ -11,9 +11,18 @@ export default class Menu extends Phaser.State{
 		this.bgGroup.add(this.ground);
 		
 		this.car = this.game.add.sprite(this.game.width/2 -100,465,'car');
+		this.game.add.text(this.game.world.centerX-160,90,"Maroon",{
+			font:'100px minecraft',
+			fill:'#fffff0',
+			align:'center'
+		});
+		this.game.add.text(this.game.world.centerX-100,190,"Driver",{
+			font:'100px minecraft',
+			fill:'#fffff0',
+			align:'center'
+		});
 
-
-		this.startButton = this.game.add.button(this.game.width/2,this.game.height/2, 'startButton', this.startClick, this);
+		this.startButton = this.game.add.button(this.game.width/2,this.game.height/2+80, 'startButton', this.startClick, this);
 		this.startButton.anchor.setTo(0.5,0.5);
 	}
 	startClick(){
