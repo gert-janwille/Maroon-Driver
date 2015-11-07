@@ -9,5 +9,8 @@ export default class Preload extends Phaser.State{
 		this.load.image('start-button', 'assets/start-button.png');
 		this.load.image('tile', 'assets/tile.png');
 	}
+	create(){
+		this.game.state.start('Menu');
+	}
 
 }
