@@ -164,8 +164,8 @@
 		}, {
 			key: 'onLoadComplete',
 			value: function onLoadComplete() {
-				//this.game.state.start('Play');
-				this.game.state.start('Menu');
+				this.game.state.start('Play');
+				//this.game.state.start('Menu');
 			}
 		}]);
 
@@ -295,9 +295,10 @@
 				if (this.cursors.right.isDown) {
 					this.car.fast();
 				}
-				if (this.cursors.left.isDown) {
-					this.car.slow();
+				if (this.car.body.wasTouching.down && this.cursors.up.isDown) {
+					this.car.jump();
 				}
+				this.car.body.velocity.x *= 0.9;
 			}
 		}]);
 
@@ -376,17 +377,23 @@
 		_createClass(Car, [{
 			key: 'jump',
 			value: function jump() {
-				console.log('jump');
+				this.body.velocity.y += -150;
 			}
 		}, {
 			key: 'slow',
 			value: function slow() {
-				console.log("slow");
+				this.body.velocity.x += -50;
+				if (!this.body.wasTouching.down) {
+					this.body.velocity.x *= 0.8;
+				};
 			}
 		}, {
 			key: 'fast',
 			value: function fast() {
-				console.log("fast");
+				this.body.velocity.x += 50;
+				if (!this.body.wasTouching.down) {
+					this.body.velocity.x *= 0.8;
+				};
 			}
 		}]);
 

@@ -23,8 +23,9 @@ export default class Play extends Phaser.State{
 		if(this.cursors.right.isDown){
 			this.car.fast();
 		}
-		if(this.cursors.left.isDown){
-			this.car.slow();
+		if(this.car.body.wasTouching.down && this.cursors.up.isDown){
+			this.car.jump();
 		}
+		this.car.body.velocity.x *=0.9;
 	}
 }

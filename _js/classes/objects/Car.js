@@ -7,12 +7,18 @@ export default class Car extends Phaser.TileSprite {
 		this.body.bounce.y = 0.35;
 	}
 	jump(){
-		console.log('jump');
+		this.body.velocity.y += -150;
 	}
 	slow(){
-		console.log("slow");
+		this.body.velocity.x += -50;
+		if (!this.body.wasTouching.down) {
+			this.body.velocity.x *= 0.8;
+		};
 	}
 	fast(){
-		console.log("fast");
+		this.body.velocity.x += 50;
+		if (!this.body.wasTouching.down) {
+			this.body.velocity.x *= 0.8;
+		};
 	}
 }
