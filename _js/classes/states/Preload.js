@@ -9,7 +9,12 @@ export default class Preload extends Phaser.State{
 		this.load.image('get-ready', 'assets/get-ready.png');
 		this.load.image('startButton', 'assets/start-button.png');
 		this.load.image('tile', 'assets/tile.png');
-		this.load.image('lamp', 'assets/lamp.png')
+		this.load.image('lamp', 'assets/lamp.png');
+
+		this.load.bitmapFont('flappyfont', 'assets/font/flappyfont.png', 'assets/font/flappyfont.fnt');
+
+		this.load.audio('hit', 'assets/hit.wav');
+		this.load.audio('score', 'assets/score.wav');
 
 		this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
 	}

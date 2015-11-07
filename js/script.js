@@ -159,6 +159,11 @@
 				this.load.image('tile', 'assets/tile.png');
 				this.load.image('lamp', 'assets/lamp.png');
 
+				this.load.bitmapFont('flappyfont', 'assets/font/flappyfont.png', 'assets/font/flappyfont.fnt');
+
+				this.load.audio('hit', 'assets/hit.wav');
+				this.load.audio('score', 'assets/score.wav');
+
 				this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
 			}
 		}, {
@@ -303,6 +308,7 @@
 				this.LampGenerator.timer.start();
 
 				this.lamps = this.game.add.group();
+				this.score = 0;
 			}
 		}, {
 			key: 'update',
@@ -322,8 +328,10 @@
 				this.car.body.velocity.x *= 0.9;
 
 				this.lamps.forEach(function (lampGroup) {
-					_this.game.physics.arcade.collide(_this.car, lampGroup, _this.deathHandler, null, _this);
+					_this.game.physics.arcade.collide(_this.car, lampGroup, _this.deathHandler, _this.checkScore(lampGroup), _this);
 				});
+
+				this.scoreText = this.game.add.bitmapText(this.game.width / 2, 10, 'flappyfont', this.score.toString(), 50);
 			}
 		}, {
 			key: 'generateLamp',
@@ -333,12 +341,19 @@
 					lampGroup = new _objectsLampGroup2['default'](this.game, this.lamps);
 				}
 				lampGroup.reset(this.game.width + lampGroup.width / 2, 0);
-				console.log(lampGroup);
 			}
 		}, {
 			key: 'deathHandler',
 			value: function deathHandler() {
-				//console.log('dead');
+				console.log('dead');
+			}
+		}, {
+			key: 'checkScore',
+			value: function checkScore(lampGroup) {
+				if (lampGroup.exists && !lampGroup.hasScored && lampGroup.lamp.world.x <= this.car.world.x) {
+					lampGroup.hasScored = true;
+					this.score++;
+				}
 			}
 		}]);
 

@@ -20,6 +20,7 @@ export default class Play extends Phaser.State{
 		this.LampGenerator.timer.start();
 
 		this.lamps = this.game.add.group();
+		this.score = 0;
 	}
 	update(){
 		this.game.physics.arcade.collide(this.car,this.ground);
@@ -35,8 +36,10 @@ export default class Play extends Phaser.State{
 		this.car.body.velocity.x *=0.9;
 
 		this.lamps.forEach(lampGroup => { 
-			this.game.physics.arcade.collide(this.car, lampGroup, this.deathHandler, null, this); 
+			this.game.physics.arcade.collide(this.car, lampGroup, this.deathHandler, this.checkScore(lampGroup), this);
 		});
+
+		this.scoreText = this.game.add.bitmapText(this.game.width/2, 10, 'flappyfont',this.score.toString(), 50);
 	}
 
 	generateLamp(){
@@ -45,9 +48,15 @@ export default class Play extends Phaser.State{
 			lampGroup = new LampGroup(this.game, this.lamps); 
 		}
 		lampGroup.reset(this.game.width + lampGroup.width/2, 0);
-		console.log(lampGroup);
 	}
 	deathHandler(){
-		//console.log('dead');
+		console.log('dead');
+	}
+
+	checkScore(lampGroup) {
+		if(lampGroup.exists && !lampGroup.hasScored && lampGroup.lamp.world.x <= this.car.world.x) { 
+			lampGroup.hasScored = true;
+			this.score++;
+		} 
 	}
 }
