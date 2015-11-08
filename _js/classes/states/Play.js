@@ -1,6 +1,7 @@
 import Ground from '../objects/Ground';
 import Car from '../objects/Car';
 import LampGroup from '../objects/LampGroup';
+import ScoreBoard from '../objects/ScoreBoard';
 
 export default class Play extends Phaser.State{
 	create(){
@@ -36,7 +37,6 @@ export default class Play extends Phaser.State{
 		this.lamps.forEach(lampGroup => { 
 			this.game.physics.arcade.collide(this.car, lampGroup, this.deathHandler, this.checkScore(lampGroup), this);
 		});
-		this.scoreText = this.game.add.bitmapText(this.game.width/2, 10, 'flappyfont',this.score.toString(), 50);
 	}
 
 	generateLamp(){
@@ -46,11 +46,15 @@ export default class Play extends Phaser.State{
 	}
 	deathHandler(){
 		this.hitSound.play();
+
+		this.scoreboard = new ScoreBoard(this.game); 
+		this.game.add.existing(this.scoreboard); 
+		this.scoreboard.show(this.score);
+
 		this.lamps.callAll('stop'); 
 		this.LampGenerator.timer.stop(); 
 		this.ground.stopScroll();
 		this.car.kill(); 
-		this.game.state.start('Menu');
 	}
 
 	checkScore(lampGroup) {
@@ -60,4 +64,10 @@ export default class Play extends Phaser.State{
 			this.scoreSound.play();
 		} 
 	}
+	shutdown() { 
+		this.car.destroy(); 
+		this.lamps.destroy(); 
+		this.scoreboard.destroy();
+	}
+
 }

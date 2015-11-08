@@ -158,6 +158,11 @@
 				this.load.image('startButton', 'assets/start-button.png');
 				this.load.image('tile', 'assets/tile.png');
 				this.load.image('lamp', 'assets/lamp.png');
+				this.load.image('scoreboard', 'assets/scoreboard.png');
+				this.load.image('gameover', 'assets/gameover.png');
+				this.load.image('particle', 'assets/particle.png');
+
+				this.load.spritesheet('medals', 'assets/medals.png', 44, 46, 2);
 
 				this.load.bitmapFont('flappyfont', 'assets/font/flappyfont.png', 'assets/font/flappyfont.fnt');
 
@@ -280,6 +285,10 @@
 
 	var _objectsLampGroup2 = _interopRequireDefault(_objectsLampGroup);
 
+	var _objectsScoreBoard = __webpack_require__(9);
+
+	var _objectsScoreBoard2 = _interopRequireDefault(_objectsScoreBoard);
+
 	var Play = (function (_Phaser$State) {
 		_inherits(Play, _Phaser$State);
 
@@ -328,7 +337,6 @@
 				this.lamps.forEach(function (lampGroup) {
 					_this.game.physics.arcade.collide(_this.car, lampGroup, _this.deathHandler, _this.checkScore(lampGroup), _this);
 				});
-				this.scoreText = this.game.add.bitmapText(this.game.width / 2, 10, 'flappyfont', this.score.toString(), 50);
 			}
 		}, {
 			key: 'generateLamp',
@@ -341,11 +349,15 @@
 			key: 'deathHandler',
 			value: function deathHandler() {
 				this.hitSound.play();
+
+				this.scoreboard = new _objectsScoreBoard2['default'](this.game);
+				this.game.add.existing(this.scoreboard);
+				this.scoreboard.show(this.score);
+
 				this.lamps.callAll('stop');
 				this.LampGenerator.timer.stop();
 				this.ground.stopScroll();
 				this.car.kill();
-				this.game.state.start('Menu');
 			}
 		}, {
 			key: 'checkScore',
@@ -355,6 +367,13 @@
 					this.score++;
 					this.scoreSound.play();
 				}
+			}
+		}, {
+			key: 'shutdown',
+			value: function shutdown() {
+				this.car.destroy();
+				this.lamps.destroy();
+				this.scoreboard.destroy();
 			}
 		}]);
 
@@ -548,6 +567,92 @@
 	})(Phaser.Sprite);
 
 	exports['default'] = Lamp;
+	module.exports = exports['default'];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ScoreBoard = (function (_Phaser$Group) {
+		_inherits(ScoreBoard, _Phaser$Group);
+
+		function ScoreBoard(game) {
+			_classCallCheck(this, ScoreBoard);
+
+			_get(Object.getPrototypeOf(ScoreBoard.prototype), 'constructor', this).call(this, game);
+			var gameover = this.create(this.game.width / 2, 100, 'gameover');
+			gameover.anchor.setTo(0.5, 0.5);
+
+			this.scoreboard = this.create(this.game.width / 2, 200, 'scoreboard');
+			this.scoreboard.anchor.setTo(0.5, 0.5);
+
+			this.scoreText = this.game.add.bitmapText(this.scoreboard.width + 150, 180, 'flappyfont', '', 18);
+			this.add(this.scoreText);
+
+			this.startButton = this.game.add.button(this.game.width / 2, 300, 'startButton', this.startClick, this);
+			this.startButton.anchor.setTo(0.5, 0.5);
+			this.add(this.startButton);
+
+			this.y = this.game.height;
+			this.x = 0;
+		}
+
+		_createClass(ScoreBoard, [{
+			key: 'show',
+			value: function show(score) {
+				this.scoreText.setText(score.toString());
+				var medal = undefined;
+				if (score >= 1 && score < 20) {
+					medal = this.game.add.sprite(-65, 7, 'medals', 1);
+					medal.anchor.setTo(0.5, 0.5);
+					this.scoreboard.addChild(medal);
+				} else if (score >= 20) {
+					medal = this.game.add.sprite(-65, 7, 'medals', 0);
+					medal.anchor.setTo(0.5, 0.5);
+					this.scoreboard.addChild(medal);
+				}
+
+				if (medal) {
+					var emitter = this.game.add.emitter(medal.x, medal.y, 400);
+					this.scoreboard.addChild(emitter);
+					emitter.width = medal.width;
+					emitter.height = medal.height;
+					emitter.makeParticles('particle');
+					emitter.setRotation(-100, 100);emitter.setXSpeed(0, 0);
+					emitter.setYSpeed(0, 0);
+					emitter.minParticleScale = 0.25;
+					emitter.maxParticleScale = 0.5;
+					emitter.setAll('body.allowGravity', false);
+					emitter.start(false, 20, 20);
+				}
+
+				this.game.add.tween(this).to({ y: 0 }, 20, Phaser.Easing.Bounce.Out, true);
+			}
+		}, {
+			key: 'startClick',
+			value: function startClick() {
+				this.game.state.start('Play');
+			}
+		}]);
+
+		return ScoreBoard;
+	})(Phaser.Group);
+
+	exports['default'] = ScoreBoard;
 	module.exports = exports['default'];
 
 /***/ }
